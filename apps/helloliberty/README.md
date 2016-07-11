@@ -1,11 +1,13 @@
-# Amalgam8 helloworld sample
+# Amalgam8 helloliberty sample with Websphere Liberty
 
 ## Overview
 
-The helloworld sample starts two versions of a helloworld microservice, to demonstrate how Amalgam8 can be used to split 
+The helloliberty sample is similar to the 
+ [helloworld sample](https://github.com/amalgam8/examples/tree/0.1.0/apps/helloworld).
+It runs two versions of a helloliberty microservice, to demonstrate how Amalgam8 can be used to split 
 incoming traffic between the two versions. You can define the proportion of traffic to each microservice as a percentage.
 
-## Running the helloworld demo
+## Running the helloliberty demo
 
 Before you begin, follow the environment set up instructions at https://github.com/amalgam8/examples/blob/master/README.md
 
@@ -21,16 +23,16 @@ Before you begin, follow the environment set up instructions at https://github.c
     +------------+--------------+
     | Service    | Instances    |
     +------------+--------------+
-    | helloworld | v1(2), v2(2) |
+    | helloliberty | v1(2), v2(2) |
     +------------+--------------+
     ```
 
-    There are 4 instances of the helloworld service. 2 are instances of version "v1" and 2 are version "v2". 
+    There are 4 instances of the helloliberty service. 2 are instances of version "v1" and 2 are version "v2". 
 
-1. Send all traffic to the v1 version of helloworld, by running the following command:
+1. Send all traffic to the v1 version of helloliberty, by running the following command:
 
     ```
-    a8ctl route-set helloworld --default v1
+    a8ctl route-set helloliberty --default v1
     ```
 
 1. You can confirm the routes are set by running the following command:
@@ -45,14 +47,14 @@ Before you begin, follow the environment set up instructions at https://github.c
     +------------+-----------------+-------------------+
     | Service    | Default Version | Version Selectors |
     +------------+-----------------+-------------------+
-    | helloworld | v1              |                   |
+    | helloliberty | v1              |                   |
     +------------+-----------------+-------------------+
     ```
 
 1. Confirm that all traffic is being directed to the v1 instance, by running the following cURL command multiple times:
 
     ```
-    curl http://localhost:32000/helloworld/hello
+    curl http://localhost:32000/helloliberty/hello
     ```
 
     **Note**: Replace GATEWAY_URL above with the appropriate URL of the gateway
@@ -61,43 +63,43 @@ Before you begin, follow the environment set up instructions at https://github.c
     You can see that the traffic is continually routed between the v1 instances only, in a round-robin fashion:
 
     ```
-    $ curl http://localhost:32000/helloworld/hello
-    Hello version: v1, container: helloworld-v1-p8909
-    $ curl http://localhost:32000/helloworld/hello
-    Hello version: v1, container: helloworld-v1-qwpex
-    $ curl http://localhost:32000/helloworld/hello
-    Hello version: v1, container: helloworld-v1-p8909
-    $ curl http://localhost:32000/helloworld/hello
-    Hello version: v1, container: helloworld-v1-qwpex
+    $ curl http://localhost:32000/helloliberty/hello
+    Hello version: v1, container: helloliberty-v1-p8909
+    $ curl http://localhost:32000/helloliberty/hello
+    Hello version: v1, container: helloliberty-v1-qwpex
+    $ curl http://localhost:32000/helloliberty/hello
+    Hello version: v1, container: helloliberty-v1-p8909
+    $ curl http://localhost:32000/helloliberty/hello
+    Hello version: v1, container: helloliberty-v1-qwpex
     ...
     ```
 
-1. Next, we will split traffic between helloworld v1 and v2
+1. Next, we will split traffic between helloliberty v1 and v2
 
-    Run the following command to send 25% of the traffic to helloworld v2, leaving the rest (75%) on v1:
+    Run the following command to send 25% of the traffic to helloliberty v2, leaving the rest (75%) on v1:
     
     ```
-    a8ctl route-set helloworld --default v1 --selector 'v2(weight=0.25)'
+    a8ctl route-set helloliberty --default v1 --selector 'v2(weight=0.25)'
     ```
 
 1. Run this cURL command several times:
 
     ```
-    curl http://localhost:32000/helloworld/hello
+    curl http://localhost:32000/helloliberty/hello
     ```
 
-    You will see alternating responses from all 4 helloworld instances, where approximately 1 out of every 4 (25%) responses
+    You will see alternating responses from all 4 helloliberty instances, where approximately 1 out of every 4 (25%) responses
     will be from a "v2" instances, and the other responses from the "v1" instances:
 
     ```
-    $ curl http://localhost:32000/helloworld/hello
-    Hello version: v1, container: helloworld-v1-p8909
-    $ curl http://localhost:32000/helloworld/hello
-    Hello version: v1, container: helloworld-v1-qwpex
-    $ curl http://localhost:32000/helloworld/hello
-    Hello version: v2, container: helloworld-v2-ggkvd
-    $ curl http://localhost:32000/helloworld/hello
-    Hello version: v1, container: helloworld-v1-p8909
+    $ curl http://localhost:32000/helloliberty/hello
+    Hello version: v1, container: helloliberty-v1-p8909
+    $ curl http://localhost:32000/helloliberty/hello
+    Hello version: v1, container: helloliberty-v1-qwpex
+    $ curl http://localhost:32000/helloliberty/hello
+    Hello version: v2, container: helloliberty-v2-ggkvd
+    $ curl http://localhost:32000/helloliberty/hello
+    Hello version: v1, container: helloliberty-v1-p8909
     ...
     ```
 
@@ -110,7 +112,7 @@ Before you begin, follow the environment set up instructions at https://github.c
 You can look at registration details for a service in the A8 registry, by running the following cURL command:
 
 ```
-curl -X GET -H "Authorization: Bearer local" http://localhost:31300/api/v1/services/helloworld | jq .
+curl -X GET -H "Authorization: Bearer local" http://localhost:31300/api/v1/services/helloliberty | jq .
 ```
 
 **Note**: Replace localhost:31300 above with the appropriate host
@@ -131,7 +133,7 @@ The output should look something like this:
         "value": "172.17.0.7:5000",
         "type": "http"
       },
-      "service_name": "helloworld",
+      "service_name": "helloliberty",
       "id": "a594b578955aa580"
     },
     {
@@ -144,7 +146,7 @@ The output should look something like this:
         "value": "172.17.0.4:5000",
         "type": "http"
       },
-      "service_name": "helloworld",
+      "service_name": "helloliberty",
       "id": "9eec2aac0c6308f5"
     },
     {
@@ -157,7 +159,7 @@ The output should look something like this:
         "value": "172.17.0.6:5000",
         "type": "http"
       },
-      "service_name": "helloworld",
+      "service_name": "helloliberty",
       "id": "69ce12035f9ada47"
     },
     {
@@ -170,18 +172,18 @@ The output should look something like this:
         "value": "172.17.0.5:5000",
         "type": "http"
       },
-      "service_name": "helloworld",
+      "service_name": "helloliberty",
       "id": "161c6daaca4b23eb"
     }
   ],
-  "service_name": "helloworld"
+  "service_name": "helloliberty"
 }
 ```
 
 To list the routes for a service, run the following cURL command:
 
 ```
-curl http://localhost:31200/v1/tenants/local/versions/helloworld | jq .
+curl http://localhost:31200/v1/tenants/local/versions/helloliberty | jq .
 ```
 
 **Note**: Replace localhost:31200 above with the appropriate host
@@ -193,12 +195,12 @@ After running the demo, the output should be as follows:
 {
   "selectors": "{v2={weight=0.25}}",
   "default": "v1",
-  "service": "helloworld"
+  "service": "helloliberty"
 }
 ```
 
 You can also set routes using the REST API. For example, to send all traffic to v2, run the following curl command:
 
 ```
-curl -X PUT http://localhost:31200/v1/tenants/local/versions/helloworld -d '{"default": "v2"}' -H "Content-Type: application/json"
+curl -X PUT http://localhost:31200/v1/tenants/local/versions/helloliberty -d '{"default": "v2"}' -H "Content-Type: application/json"
 ```

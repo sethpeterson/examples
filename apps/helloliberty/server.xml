@@ -15,5 +15,5 @@
     <applicationMonitor updateTrigger="mbean"/>
 
 
-    <webApplication id="helloworld" location="helloworld.war" name="helloworld" contextRoot="/"/>
+    <webApplication id="helloliberty" location="helloliberty.war" name="helloliberty" contextRoot="/"/>
 </server>
