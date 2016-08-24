@@ -63,7 +63,7 @@ provided.
 1. Clone the Amalgam8 examples repo and then start the Vagrant environment (or install and setup the equivalent dependencies manually)
 
     ```bash
-    git clone git@github.com:amalgam8/examples.git
+    git clone https://github.com/amalgam8/examples
 
     cd examples
     vagrant up
