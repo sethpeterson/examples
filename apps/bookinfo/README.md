@@ -198,12 +198,8 @@ and adds a set of assertions (`checklist.json`)
 that we expect to pass: each service in the call chain should return `HTTP
 200 OK` and the productpage should respond in 7 seconds.
 
-* Edit the IP address of the `log_server` field in the file
-  `apps/bookinfo/checklist.json` to point to the IP address where the
-  controller is running (192.168.33.33 or localhost or your docker machine
-  IP).
 
-* Run the recipe using the following command from the main examples folder:
+Run the recipe using the following command from the main examples folder:
 
 ```bash
 a8ctl recipe-run --topology apps/bookinfo/topology.json --scenarios apps/bookinfo/gremlins.json --checks apps/bookinfo/checklist.json --header 'Cookie' --pattern='user=jason'
